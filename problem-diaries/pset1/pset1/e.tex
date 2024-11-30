@@ -1,0 +1,43 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Title of the document
+\title{Problem Diary}
+\author{Jerry Hong $z5479221$}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Template for Problem Set and Problem
+\section*{Problem Set \#1 - Problem E}
+
+\subsection*{1. Solution Process}
+
+Getting started, and completely grasping the scope of this problem considering all requirements and constraints was arguably the hardest part. It took a lot of going through test cases to first of all understand the problem.
+
+Initially i had the idea of using binary search to look for c - which was lower bounded by k, and upper bounded by $2^n$ roughly, but i quickly there was no way to check whether a c is possible without actually solving the problem.
+
+I decided that i needed to figure out how many possible substrings, and prefixes were possible between any two strings, and then tackle the constraint of $k$ after - this turned out to be the right logical approach.
+
+I observed the differences of the number of prefixes, when $s$ contained a $b$ and $t$ contained an $a$. And after some thought, visualising the problem space as a tree really helped to model the problem to the $k$ strings constraint, as there can be a maximum of $k$ paths taken at each level and was ultimately able to arrive at the solution by myself.
+
+\subsection*{2. Challenges and Reflections}
+During the process of solving this problem, I encountered the following challenges:
+\begin{itemize}
+    \item Understanding how to approach the problem
+    \item Struggled with thinking, when faced with so many different constraints and requirements
+\end{itemize}
+
+To overcome these challenges, I:
+\begin{itemize}
+    \item For both challenges mentioned, i just decided to break the problem down to two parts - figuring out how many substrings can exist between any two strings s and t, and then how to apply the k constrain to figure out the solution. Although I didn't know they were necessary steps, i knew that trying to figure them out would increase my understanding and grasp of the problem aspect better.
+\end{itemize}
+
+\subsection*{3. Collaboration}
+For this problem, I didn't collaborate with anyone.
+
+
+\end{document}

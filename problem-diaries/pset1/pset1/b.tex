@@ -1,0 +1,38 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Title of the document
+\title{Problem Diary}
+\author{Jerry Hong $z5479221$}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Template for Problem Set and Problem
+\section*{Problem Set \#1 - Problem B}
+
+\subsection*{1. Solution Process}
+
+At first it looked like a dp problem but quickly realised it wasn't due to the alternating nature of the things. I also wondered whether or not maximum size of the subsequence would be different depending on if the string started with a negative or positive sequence - but quickly came to realise that we just greedily go through it.
+
+
+\subsection*{2. Challenges and Reflections}
+During the process of solving this problem, I encountered the following challenges:
+\begin{itemize}
+    \item 
+During the first iteration of the process, i kept a current array of negative / positive contiguous sequences that we are currently traversing, and then decide to take the maximum of that array. But  the problem was, I only add the maximum to the array \emph{after} i detect a change in signs, which meant the last sequnece gets neglected. 
+\end{itemize}
+
+To overcome these challenges, I:
+\begin{itemize}
+    \item To tackle the problem that the last sequnece of +/- integers getting neglected i just needed to add the count again.
+\end{itemize}
+
+\subsection*{3. Collaboration}
+I did not collaborate with anyone in this diary.
+
+
+\end{document}

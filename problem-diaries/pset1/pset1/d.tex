@@ -1,0 +1,49 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Title of the document
+\title{Problem Diary}
+\author{Jerry Hong $z5479221$}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Template for Problem Set and Problem
+\section*{Problem Set \#1 - Problem A}
+
+\subsection*{1. Solution Process}
+Understanding this problem was pretty tough, and getting my head wrapped around the fact that the input gives us marks that were higher, and the output requires number of marks lower than the line was pretty confusing.
+
+However, the fact that they required different things inspired my thought that we would need to simulate this process, and basically record the number of total marks at each day.
+
+I was quite stuck on a simulation process and one of the tutors gave a hint to take the most optimal solution at each point, which meant the option that didn't require creating an extra mark - and then later, if this turned out to be impossible, backtrack and take the other options.
+
+I implemented this solution in recursion but it was ultimately unviable due to implementation details or the nature of the program being too memory intensive.
+
+After much thought, i settled on a semi-dp like solution which required two passes - the first pass to "estimate" the number of marks, and second pass to backtrack adjust the number of marks to fit. This worked
+
+\subsection*{2. Challenges and Reflections}
+During the process of solving this problem, I encountered the following challenges:
+\begin{itemize}
+    \item Implementing recursive backtracking was extremely difficult for me as I was largely unfamiliar with it. 
+    \item I kept getting a memory exceeded issue, but was certain my program was correct - i assumed that's because of the recursion stack.
+\end{itemize}
+
+To overcome these challenges, I:
+\begin{itemize}
+    \item attempted to look at previous leetcode problems I had solved involving backtracking to remind myself of a general framework to implement solutions like this
+    \item looked for ways that I could implement and "early exit" or just to reduce the number of recursive calls i was making - this was unsuccessful
+    \item ultimately, i slept it off and thought of a new approach the next day which worked
+\end{itemize}
+
+\subsection*{3. Collaboration}
+For this problem, I collaborated with:
+\begin{itemize}
+    \item Lab demo Kush for the initial backtracking idea
+\end{itemize}
+
+
+\end{document}

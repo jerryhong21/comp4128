@@ -1,0 +1,43 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Title of the document
+\title{Problem Diary}
+\author{Jerry Hong $z5479221$}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Template for Problem Set and Problem
+\section*{Problem Set \#1 - Problem C}
+
+\subsection*{1. Solution Process}
+Problem was hard to grasp at first.
+I played around with some test cases, and figured out that $a$ and $d$ determines the number of zeroes and ones, with the number of $a$s being the solution to $\binom{n}{2} = a$, same for d.
+
+And then, i looked at what happens to the total number of b's and c's if we inserted a 1 / 0 at a position. From here, i started with cluster of 1 and a cluster of 0's next to each other, and discovered the property that $b+c = mn$ and is conserved, where $m, n$ is the number of zeros and ones.
+
+I thought that the brute force approach of shifting every one to the right, until the end, and keeping track of the current b and c was way too brute force and is factorial time. Keeping with the greedy theme, i decided to experiment with if it was possible shifting 1s to the end of the string, until shifting another one will exceed the b, then we look for a position in the middle of the string to insert that 1 - that worked.
+
+\subsection*{2. Challenges and Reflections}
+During the process of solving this problem, I encountered the following challenges:
+\begin{itemize}
+    \item Dealing with edge cases, after implementing the algorithm, i kept getting wrong answer on a further test. I was aware that for $a = 0$ or $d = 0$, $m = 0 $ or $ 1$, but i didn't really know how to account for that, 
+\end{itemize}
+
+To overcome these challenges, I:
+\begin{itemize}
+    \item I realised that the greedy algorithm is $O(n)$, and because there are a maximum possiblity of 4 edge cases for when a=0, b=0, then we could brute force through these possibilities, and whenever we found a valid answer, that was guaranteed to be a valid answer. And after going through all these possibilities, and none of them were possible, then we can return impossible.
+\end{itemize}
+
+\subsection*{3. Collaboration}
+For this problem, I collaborated with:
+\begin{itemize}
+    \item Andrew Zhang to discuss edge cases and viability of a greedy algorithm
+\end{itemize}
+
+
+\end{document}

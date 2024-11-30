@@ -1,0 +1,31 @@
+{
+    "files.associations": {
+        "unordered_set": "cpp",
+        "__config": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__threading_support": "cpp",
+        "__tree": "cpp",
+        "__tuple": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "deque": "cpp",
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "map": "cpp",
+        "mutex": "cpp",
+        "ostream": "cpp",
+        "queue": "cpp",
+        "set": "cpp",
+        "stack": "cpp",
+        "type_traits": "cpp",
+        "unordered_map": "cpp",
+        "variant": "cpp",
+        "vector": "cpp",
+        "chrono": "cpp",
+        "string_view": "cpp",
+        "iostream": "cpp",
+        "tuple": "cpp",
+        "string": "cpp"
+    }
+}

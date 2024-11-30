@@ -1,0 +1,49 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+% Title of the document
+\title{Problem Diary}
+\author{Jerry Hong $z5479221$}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% Template for Problem Set and Problem
+\section*{Problem Set \#1 - Problem F}
+
+\subsection*{1. Solution Process}
+First, I ran though test cases that I thought of myself to get a better understanding of this problem, I didn't really know how to start so I was trying to pick my own brain, for how my brain will intuitively approach this problem, although this did not help at all.
+
+I tried some greedy approaches such as getting all the inversion pairs and then sorting with from decreasing u and decreasing v - this worked for the example test cases but failed tests - was too simple to be correct.
+
+Staring at these test cases, I knew that heuristically, i should always look to swap elements such that the last item of the array becomes the largest element. So i was looking at arrays such as $\{1,5,4,3,2\}$ and figuring out how to solve this. Eventually, i realised that if the largest element is not in the last index of the array, in this case, 5, then the last index of the array, 2, should form an inversion with everything from 2 to 5. I could do this for every index, starting with the last to the first. It was important that every localised swap did not interfere with any other inversions though.
+
+The fact that the array could be of different integers and wasn't unique was annoying, so after some thought and some inspiration from past experience i decided to map it into an array of 1 to n, and duplicate elements are kept as not an inversion, i.e. if $i > j$ and $a_i = a_j$, then it is said that $a_i > a_j$ in the mapped rank array.
+
+
+
+\subsection*{2. Challenges and Reflections}
+During the process of solving this problem, I encountered the following challenges:
+\begin{itemize}
+    \item Stuck with greedy approaches since they worked for the example test cases
+    \item struggled with how to deal with duplicate values
+\end{itemize}
+
+To overcome these challenges, I:
+\begin{itemize}
+    \item I gave myself constant reality checks to move on because this wasn't as simple as sorting (or so i thought)
+    \item looking at the simple case where the array was just a permutation of the \emph{unique} numbers from 1 to n gave inspiration on what if i could reduce every problem to this - and i was able to.
+\end{itemize}
+
+\subsection*{3. Collaboration}
+For this problem, I collaborated with:
+\begin{itemize}
+    \item Lab demos
+    \item Discussed heuristic approaches with Andrew Zhang but ultimately did not come to any conclusive results.
+\end{itemize}
+
+
+\end{document}
