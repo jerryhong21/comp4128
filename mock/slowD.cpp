@@ -119,6 +119,3 @@ int main(void) {
 
     cout << minDist << endl;
 }
-
-
-
