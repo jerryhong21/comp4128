@@ -10,178 +10,162 @@
 #include <algorithm>
 #include <limits>
 #include <bitset>
+#include <cstring>
 
 // #include <bits/stdc++.h>
 using namespace std;
 
 typedef long long ll;
-typedef vector<ll> vll;
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-typedef pair<ll, ll> pll;
-typedef pair<int, int> pii;
-typedef vector<pll> vpll;
-typedef tuple<ll, ll, ll> t3l;
 
-const ll INF = (1LL << 61);
-// const int INF = (1LL << 30);
+// const ll INF = (1LL << 61);
+const int INF = (1LL << 30);
 // const int INF = 1e9;
 
-#define REPi(n) for (int i = 0; i < n; i++)
-#define REPj(n) for (int j = 0; j < n; j++)
-#define REPk(n) for (int k = 0; k < n; k++)
-#define REP1i(n) for (int i = 1; i <= n; i++)
-#define REP1j(n) for (int j = 1; j <= n; j++)
-#define REP1k(n) for (int k = 1; k <= n; k++)
-#define RANGE(vec) (vec).begin(), (vec).end()
-
-// we just need to find a path that will visit every vertex
-
-const int N = 200010;
-vector<int> edges[N];
-vector<int> edges_r[N];
-bool seen[N];
-bool seen_r[N];
-bool active[N];
-int scc[N];
-vector<int> postorder(N);
-
 int n;
-int p = 0;
 
-int numActive = 0;
-bool valid = false;
+const ll N = 200010;
+bool scc_seen[N], scc_seen_r[N];
+unordered_set<int> edges[N], edges_r[N];
+ll postorder[N];
+ll p = 0;
+int scc[N];
 
-void dfs(int u)
+// Alternatively:
+// vector<vector<int>> edges(n + 1), edges_r(n + 1);
+// vector<bool> scc_seen(n + 1, false), scc_seen_r(n + 1, false);
+// vector<int> postorder(n + 1, 0), scc(n + 1, 0);
+
+void initScc(int n)
 {
-    if (seen[u])
+    fill(postorder, postorder + N, 0);
+    fill(scc, scc + N, 0);
+    memset(scc_seen, false, sizeof(scc_seen));
+    memset(scc_seen_r, false, sizeof(scc_seen_r));
+}
+
+/*
+ * kosaraju
+ */
+
+void scc_dfs(int u)
+{
+    if (scc_seen[u])
         return;
-    seen[u] = true;
+    scc_seen[u] = true;
     for (int v : edges[u])
-        dfs(v);
+        scc_dfs(v);
     postorder[p++] = u;
 }
 
-void dfs_r(int u, int mark)
+void scc_dfs_r(int u, int mark)
 {
-    if (seen_r[u])
+    if (scc_seen_r[u])
         return;
-    seen_r[u] = true;
+    scc_seen_r[u] = true;
     scc[u] = mark;
     for (int v : edges_r[u])
-        dfs_r(v, mark);
+        scc_dfs_r(v, mark);
 }
 
 int compute_sccs()
 {
     int sccs = 0;
     for (int i = 1; i <= n; i++)
-        if (!seen[i])
-            dfs(i);
+        if (!scc_seen[i])
+            scc_dfs(i);
     for (int i = p - 1; i >= 0; i--)
     {
         int u = postorder[i];
-        if (!seen_r[u]) // ignore seen vertices
-            dfs_r(u, sccs++);
+        if (!scc_seen_r[u]) // ignore visited vertices
+            scc_dfs_r(u, sccs++);
     }
     return sccs;
 }
 
-bool seen1[N];
+// Forming a condensation graph after running compute_sccs()
+unordered_set<int> condensation_graph[N];
+unordered_set<string> added_edges; // To avoid duplicate edges
 
-void dfsFinal(int u, vector<unordered_set<int>> &condensation, int nScc)
+// assumes vertices are 1 indexed
+void build_condensation_graph(int scc_count)
 {
-    if (seen1[u])
-        return;
-    numActive++;
-    if (numActive == nScc) {
-        valid = true;
-        cout << "Yes\n";
-        exit(0);
-    }
-    seen1[u] = true;
-    for (int v : condensation[u])
-    {
-        dfsFinal(v, condensation, nScc);
-    }
-    numActive--;
-}
-
-int main(void)
-{
-    cin >> n;
-    for (int i = 1; i <= n; ++i)
-    {
-        int a, b;
-        cin >> a >> b;
-            edges[i].push_back(a);
-            edges_r[a].push_back(i);
-            // player a and b can receive from player i
-            edges[i].push_back(b);
-            edges_r[b].push_back(i);
-    }
-    for (int i = 0; i <= n; ++i)
-    {
-        seen[i] = false;
-        seen1[i] = false;
-        seen_r[i] = false;
-        active[i] = false;
-        scc[i] = -1;
-    }
-
-    int nSccs = compute_sccs();
-    for (int i = 1; i <= n; ++i)
-    {
-        // cout << "player " << i << " belong to scc " << scc[i] << endl;
-    }
-
-    vector<unordered_set<int>> condensation(nSccs);
-    for (int u = 1; u <= n; ++u)
+    for (int u = 1; u <= n; u++)
     {
         for (int v : edges[u])
         {
-            if (scc[u] != scc[v])
+            int scc_u = scc[u];
+            int scc_v = scc[v];
+            if (scc_u != scc_v)
             {
-                condensation[scc[u]].insert(scc[v]);
-                // cout << "added edge from scc " << scc[u] << " to scc " << scc[v] << endl;
+                // ll edge_id = 1LL * scc_u * n + scc_v; // Unique ID for the edge
+                string edge_id = to_string(scc_u) + ' ' + to_string(scc_v);
+                if (added_edges.find(edge_id) == added_edges.end())
+                {
+                    added_edges.insert(edge_id);
+                    condensation_graph[scc_u].insert(scc_v);
+                    // cout << "Added edge between " << edge_id << endl;
+                }
             }
         }
     }
+}
 
-    int nSource = 0, nSink = 0;
-    vector<int> inDeg(nSccs, 0), outDeg(nSccs, 0);
-    for (int i = 0; i < nSccs; ++i)
-    {
-        for (int v : condensation[i])
-        {
-            outDeg[i]++;
-            inDeg[v]++;
+// freq[i] = the number of nodes with distance i
+unordered_map<int, int> freq;
+int dist[N];
+
+bool seen[N];
+
+void dfs(int u, vector<int> &postorder)
+{
+    if (seen[u])
+        return;
+    seen[u] = true;
+    for (int v : condensation_graph[u])
+        dfs(v, postorder);
+    postorder.push_back(u);
+}
+
+vector<int> topsort(int n) {
+    memset(seen, false, sizeof(seen));
+    vector<int> res;
+    for (int i = 0; i < n; i++)
+        dfs(i, res);
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+int main(void) {
+    cin >> n;
+    for (int i = 1; i <= n; ++i) {
+        int u,v;
+        cin >> u >> v;
+        if (i != u) {
+            edges[i].insert(u);
+            edges_r[u].insert(i);
+        }
+        if (i != v) {
+            edges[i].insert(v);
+            edges_r[v].insert(i);
         }
     }
-    for (int i = 0; i < nSccs; ++i)
-    {
-        if (inDeg[i] == 0)
-            nSource++;
-        if (outDeg[i] == 0)
-            nSink++;
-    }
-    for (int i = 0; i < nSccs; ++i)
-    {
-        // cout << "scc " << i << " has outdeg " << outDeg[i] << " and inDeg " << inDeg[i] << endl;
-    }
-    if (inDeg[scc[1]] != 0)
-    {
+
+    initScc(n);
+    int nSccs = compute_sccs();
+    build_condensation_graph(nSccs);
+
+    // perform topsort on the condensation graph, and check edge
+    vector<int> order = topsort(nSccs);
+    if (order[0] != scc[1]) {
         cout << "No\n";
         return 0;
     }
-
-    if (nSource > 1 || nSink > 1)
-    {
-        cout << "No\n";
-        return 0;
+    // for every pair of vertices, check the existence of a directed edge
+    for (int i = 0; i < order.size() - 1; ++i) {
+        if (condensation_graph[i].find(order[i + 1]) == condensation_graph[i].end()) {
+            cout << "No\n";
+            return 0;
+        }
     }
-    dfsFinal(scc[1], condensation, nSccs);
-
-    cout << "No\n";
-    return 0;
+    cout << "Yes\n";
 }
