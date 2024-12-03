@@ -24,13 +24,13 @@ int main(void) {
     cin >> n;
 
     // string res(n.size());
-    
     for (int i = 0; i < n.size(); ++i) {
         sum += (n[i] - '0');
         product *= (n[i] - '0');
     }
 
-    if ((sum * product) == stoll(n)) {
+    string res = to_string(sum * product);
+    if (n == res) {
         cout << "YES\n";
     } else {
         cout << "NO\n";
