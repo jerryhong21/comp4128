@@ -74,6 +74,8 @@ bool valid(int p1, int p2) {
     toRemove.insert(p1); toRemove.insert(p2);
 
     pt vecAB = b - a;
+
+    // earse every point that also lie on the line of a->b
     for (int i = 2; i < n; ++i) {
         pt currVec = pts[i] - a;
         if (cross(vecAB, currVec) == 0) {
@@ -117,11 +119,13 @@ int main(void)
     // assume 2 points on same line: XY
     // cross XY with every other point, if 0, remove that point
     // check if the remaining points are on a line
-
-    // bool valid = false;
-    for (int i = 0; i < 3; ++i) {
-        for (int j = i + 1; j < 3; ++j) {
-            if (valid(i,j)) {
+    // arbitrarily choose the first three points inputted
+    for (int x = 0; x < 3; ++x) {
+        for (int y = x + 1; y < 3; ++y) {
+            // we assume x, y lie on a line
+            // we erase everything on the line of x,y
+            // and check if everything else lies on a straight line
+            if (valid(x,y)) {
                 cout << "YES\n";
                 return 0;
             }
