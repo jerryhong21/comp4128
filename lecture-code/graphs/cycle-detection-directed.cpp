@@ -52,3 +52,15 @@ vector<int> getInCycleVertices() {
     }
     return inCycle;
 } 
+
+nt main() {
+    // run DFS from every unvisited node to detect any cycle
+    for (int u = 0; u < n; ++u) {
+        if (!hasCycle_seen[u]) {
+            if (hasCycle(u)) {
+                return false;
+            }
+        }
+    }
+    return true;                            // no cycle found
+}
