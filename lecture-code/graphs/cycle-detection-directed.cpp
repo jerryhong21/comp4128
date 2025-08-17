@@ -35,7 +35,7 @@ bool hasCycle(int u) {
     hasCycle_active[u] = true;
     hasCycle_seen[u] = true;
     for (int v : edges[u]) {
-        if (hasCycle_active[u] || hasCycle(v)) {
+        if (hasCycle_active[v] || hasCycle(v)) {
             return true;
         }
     }
