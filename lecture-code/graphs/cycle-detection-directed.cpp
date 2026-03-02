@@ -35,7 +35,7 @@ bool hasCycle(int u) {
     hasCycle_active[u] = true;
     hasCycle_seen[u] = true;
     for (int v : edges[u]) {
-        if (hasCycle_active[u] || hasCycle(v)) {
+        if (hasCycle_active[v] || hasCycle(v)) {
             return true;
         }
     }
@@ -52,3 +52,15 @@ vector<int> getInCycleVertices() {
     }
     return inCycle;
 } 
+
+int main() {
+    // run DFS from every unvisited node to detect any cycle
+    for (int u = 0; u < n; ++u) {
+        if (!hasCycle_seen[u]) {
+            if (hasCycle(u)) {
+                return false;
+            }
+        }
+    }
+    return true;                            // no cycle found
+}

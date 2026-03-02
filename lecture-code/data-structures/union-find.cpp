@@ -31,11 +31,29 @@ void init(int n) {
 }
 
 // with path compression
-// amortized O(logn)
+// amortized O(α(n)) - inverse ackernman function, which is <= 5 for any conceivable n
 int root(int x) {
    return parent[x] == x ? x : parent[x] = root(parent[x]);
 }
 
+// same as above function - expanded for readability
+int root(int x) {
+    if (parent[x] == x) {
+        return x;
+    }
+
+    // recursively obtain root
+    int rootX = root(parent[x]);
+    
+    // path compression - attach x directly to root
+    parent[x] = rootX;
+
+    return rootX;
+}
+
+
+// amortized O(α(n)) - inverse ackernman function, which is <= 5 for any conceivable n
+// join with size heuristic
 void join(int x, int y)  {
     x = root(x); y = root(y);
 
