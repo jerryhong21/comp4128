@@ -95,11 +95,9 @@ int main() {
     for (int j = 0; j < q; j++) 
     {
         ll l, r; cin >> l >> r;
-        // Problem: Find max of a[l,r)
-        int lvl = log2s[r-l];
-        // cout << max(sparseTable[lvl][l], sparseTable[lvl][r-(1<<lvl)]) << '\n';
 
-        cout << query(l, r - 1) << "\n";
+        // Problem: Find max of a[l,r)
+        cout << query(l, r - 1) << "\n"; // r - 1 since query is INCLUSIVE [L, R]
 
     }
 }
